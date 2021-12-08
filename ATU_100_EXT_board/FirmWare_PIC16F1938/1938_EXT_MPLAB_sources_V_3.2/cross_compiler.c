@@ -1,14 +1,60 @@
 
 #include "cross_compiler.h"
 
+#ifdef __DEBUG
+
+void init_uart(void) {
+    TXSTAbits.TXEN = 1;               // enable transmitter
+    RCSTAbits.SPEN = 1;               // enable serial port
+}
+void putch(unsigned char data) {
+    while( ! PIR1bits.TXIF)          // wait until the transmitter is ready
+        continue;
+    TXREG = data;                     // send one character
+}
+
+char firstcall = 0;
+/*   make these 'global' since having them as parameters puts a 
+     real burden on the stack space */
+char tempstring[100];
+char terminator = 0;
+char stringlength = 0;
+char* stringptr = NULL;
+
+void debugprint()
+{
+   char c;
+   if (firstcall == 0)
+   {
+       init_uart();
+       firstcall = 1;
+   }
+   for (c = 0; c < stringlength; c++)
+   {
+      putch(stringptr[c]);
+   }
+   if (terminator)
+   {
+       putch('\n');
+   }
+}
+char mystring[] = "Delay called with ";
+void IntToStr(int number, char *output);
+#endif
+
 void Delay_ms(const unsigned int time_in_ms)
 {
   unsigned int i = time_in_ms;
   CLRWDT();
-#ifdef __DEBUG
-#include <stdio.h>
-  printf("starting delay_ms for %d\n", time_in_ms);
-
+  
+#ifdef __DEBUG  
+  if (time_in_ms > 99)
+  {
+    PRINTTEXT(mystring)  
+                        
+    IntToStr((int)(time_in_ms),&tempstring[0]);
+    PRINTTEMPSTRINGLINE(6);
+  }
 #endif
 
   while (i > 0)
@@ -30,7 +76,7 @@ unsigned int ADC_Get_Sample(char channel)
   unsigned char lower = ADRESL;
   unsigned char upper = ADRESH;
   unsigned int result = (unsigned int)(upper << 8) + lower;
-  return 1;
+  return result;
 };
 
 /*  routine to detect button presses and debouncing.  input parms:

@@ -310,7 +310,7 @@ static void oled_init(void)
 
 static void oled_wr_str(char col, char page, char str[], char leng)
 { //    128*32 or 128*64 OLED
-   char i, h, g;
+    char i, h, g;
    charbits w1, w2;
 
    Soft_I2C_Start();
@@ -467,6 +467,39 @@ void dysp_off()
 
 void led_wr_str(char col, char pos, char str[], char leng)
 { //
+#ifdef __DEBUG    
+    /*  print in debug mode */ 
+    char mycolumn[] = "; col=";
+    char mylength[] = "; len=";
+    char myrow[] = "row=";
+    char myquote[]="\"";
+    char myspace[]="; ";
+    char myspaces[]="        ";
+    PRINTTEXT(myrow)  
+    IntToStr((int)(col),&tempstring[0]);
+    PRINTTEMPSTRINGTEXT(6);
+
+    PRINTTEXT(mycolumn)  
+    IntToStr((int)(pos),&tempstring[0]);
+    PRINTTEMPSTRINGTEXT(6);
+
+    PRINTTEXT(mylength)  
+    IntToStr((int)(leng),&tempstring[0]);
+    PRINTTEMPSTRINGTEXT(6);
+     
+    PRINTTEXT(myspace)     
+             
+    int spaces = (pos - 16)/12;
+    if ((spaces > 0) && (spaces < 8))
+    {
+        PRINTTEXTLEN(myspaces,(char)(spaces))
+    }
+
+    PRINTTEXT(myquote)  
+    PRINTTEXTLEN(str,leng)
+    PRINTLINE(myquote)  
+#endif
+            
    char i;
    if (e_c_led_type == 4 | e_c_led_type == 5)
       oled_wr_str(pos, col, str, leng); // 128*64  OLED display

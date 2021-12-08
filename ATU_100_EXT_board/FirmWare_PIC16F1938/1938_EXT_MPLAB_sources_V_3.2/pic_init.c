@@ -43,9 +43,12 @@ void pic_init(void)
 
   /* init the ADC here */
   FVRCON = 0x81;        /*enable FVR */
-  ADCON1bits.ADCS0 = 0; /* use Fosc/32 */
-  ADCON1bits.ADCS1 = 1;
-  ADCON1bits.ADCS2 = 0;
+//  ADCON1bits.ADCS0 = 0; /* use Fosc/32 */
+//  ADCON1bits.ADCS1 = 1;
+//  ADCON1bits.ADCS2 = 0;
+//
+  ADCON1 = 0xA0;  /* use Fosc/32 */
+
   ADCON0bits.ADON = 1;
   //
   OPTION_REGbits.nWPUEN = 0;

@@ -105,6 +105,41 @@ extern "C"
 #define LED_ON 0
 #define LED_OFF 1
     
+    
+#ifdef __DEBUG
+#include <string.h>
+    
+extern char tempstring[100];
+extern char terminator;
+extern char stringlength;
+extern char* stringptr;
+
+void debugprint(void);
+
+#define PRINTLINELEN(lineptr,length) terminator=1; stringlength=length; stringptr = &lineptr[0]; debugprint();
+#define PRINTTEXTLEN(textptr,length) terminator=0; stringlength=length; stringptr = &textptr[0]; debugprint();
+
+#define PRINTLINE(lineptr) terminator=1; stringlength=(char)(strlen(lineptr)); stringptr = &lineptr[0]; debugprint();
+#define PRINTTEXT(textptr) terminator=0; stringlength=(char)(strlen(textptr)); stringptr = &textptr[0]; debugprint();
+
+#define PRINTTEMPSTRINGLINE(length) terminator=1; stringlength=length; stringptr = &tempstring[0]; debugprint();
+#define PRINTTEMPSTRINGTEXT(length) terminator=0; stringlength=length; stringptr = &tempstring[0]; debugprint();
+
+#define PRINTDEBUG() debugprint();
+
+#else
+#define PRINTLINELEN(lineptr,length) 
+#define PRINTTEXTLEN(textptr,length) 
+
+#define PRINTLINE(lineptr) 
+#define PRINTTEXT(textptr) 
+
+#define PRINTTEMPSTRINGLINE(length) 
+#define PRINTTEMPSTRINGTEXT(length) 
+
+#define PRINTDEBUG() 
+#endif
+    
 
 /*  comment the following line out if you are using MikroC compiler */
 #define MPLAB_COMPILER
