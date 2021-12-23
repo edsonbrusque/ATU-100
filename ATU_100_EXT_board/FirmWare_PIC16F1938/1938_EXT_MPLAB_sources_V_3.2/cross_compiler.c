@@ -1,7 +1,14 @@
 
 #include "cross_compiler.h"
 
-#ifdef __DEBUG
+#ifdef MPLAB_COMPILER
+
+#pragma config FOSC = 0x04
+
+#endif
+
+
+#ifdef SIMULATOR
 
 void init_uart(void) {
     TXSTAbits.TXEN = 1;               // enable transmitter
@@ -47,7 +54,7 @@ void Delay_ms(const unsigned int time_in_ms)
   unsigned int i = time_in_ms;
   CLRWDT();
   
-#ifdef __DEBUG  
+#ifdef SIMULATOR  
   if (time_in_ms > 99)
   {
     PRINTTEXT(mystring)  

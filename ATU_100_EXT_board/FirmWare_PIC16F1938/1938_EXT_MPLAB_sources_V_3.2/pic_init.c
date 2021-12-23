@@ -24,12 +24,13 @@ void pic_init(void)
   CM1CON0bits.C1ON = 0; // Disable comparators
   CM2CON0bits.C2ON = 0;
 
-  OSCCON = 0b01111000; // 16 MHz oscillator
+  OSCCON = 0b01111010; // 16 MHz oscillator, Internal
 
   PORTA = 0;
   PORTB = 0;
   PORTC = 0;
-  LATA = 0b01000000; // PORT6 /Tx_req to 1
+ /* LATA = 0b01000000;*/  // PORT6 /Tx_req to 1
+    LATA = 0b11000000; // A6 and A7 set high
   LATB = 0;
   LATC = 0;
   TRISA = 0b00000011;

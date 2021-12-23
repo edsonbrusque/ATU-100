@@ -105,8 +105,11 @@ extern "C"
 #define LED_ON 0
 #define LED_OFF 1
     
+#ifdef SIMULATOR
+#define __DEBUG
+#endif
     
-#ifdef __DEBUG
+#ifdef SIMULATOR
 #include <string.h>
     
 extern char tempstring[100];
@@ -148,9 +151,17 @@ void debugprint(void);
 
 #include "xc.h"
 
+//  the internal oscillator is 16 Mhz
+//  the xc8 compiler needs the crystal freq defined here
+
 #define _XTAL_FREQ 16000000
 
-#define Delay_5_us() _delay((unsigned long)((5) * (_XTAL_FREQ / 4000000.0)));
+//  the CPU clock is 4 Mhz, so to convert to microseconds, there are
+//  4 clocks per usec
+
+#define DELAY_5_US_CLOCK 20
+
+#define Delay_5_us() _delay((unsigned long)(DELAY_5_US_CLOCK));
 
     void Delay_ms(const unsigned int time_in_ms);
 
@@ -172,13 +183,42 @@ void debugprint(void);
 
     void Test_init(void);
 
+//  the Version 3.2 uses A6 and A7 for the Tx lines to the transmitter
+//  And the data and clock lines to the Display uses B6 and B7, (also for the 
+//  Red/Green leds.
+
+//  WA1RCT defines things slightly differently.  The debugger uses B6 and B7
+//  and does not need the Tx lines to the transmitter.  So I defined the LED
+//  data and clock lines as A6 and A7, leaving B6 and B7 for the debugger.
+//  Since B1 and B2 are defined as inputs, writing to them does nothing,
+//  so we will put n_Tx and p_Tx there, and the LED's also
+
+#define WA1RCT
+    
+#ifdef WA1RCT
+#define n_Tx LATBbits.LATB1
+#define p_Tx LATBbits.LATB2
+    
+#define GREEN_LED LATBbits.LATB1
+#define RED_LED LATBbits.LATB2 
+
+#define Soft_I2C_Scl LATAbits.LATA6
+#define Soft_I2C_Sda LATAbits.LATA7    
+#define Soft_I2C_Scl_Direction TRISAbits.TRISA6
+#define Soft_I2C_Sda_Direction TRISAbits.TRISA7    
+    
+#else
 #define n_Tx LATAbits.LATA6
 #define p_Tx LATAbits.LATA7
     
 #define GREEN_LED LATBbits.LATB6
-#define RED_LED LATBbits.LATB7
-   
-//
+#define RED_LED LATBbits.LATB7     
+#define Soft_I2C_Scl LATBbits.LATB6
+#define Soft_I2C_Sda LATBbits.LATB7 
+#define Soft_I2C_Scl_Direction TRISBbits.TRISB6
+#define Soft_I2C_Sda_Direction TRISBbits.TRISB7 
+#endif
+    
 #define Cap_10 LATCbits.LATC7
 #define Cap_22 LATCbits.LATC3
 #define Cap_47 LATCbits.LATC6
@@ -196,10 +236,6 @@ void debugprint(void);
 #define Ind_22 LATAbits.LATA5
 #define Ind_45 LATAbits.LATA4
 
-#define Soft_I2C_Scl LATBbits.LATB6
-#define Soft_I2C_Sda LATBbits.LATB7
-#define Soft_I2C_Scl_Direction TRISBbits.TRISB6
-#define Soft_I2C_Sda_Direction TRISBbits.TRISB7
     
 /*  define how we wait for the Fixed voltage Regulator to be stable */
 #define WAIT_FOR_FVR    while (FVRCONbits.FVRRDY == 0);

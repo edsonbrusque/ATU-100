@@ -22,7 +22,7 @@ void Soft_I2C_Init()
       Soft_I2C_Scl_Direction = 0;
       Soft_I2C_Sda_Direction = 0;
       GREEN_LED = LED_OFF;  /*  turn off led's */
-      LATBbits.LATB7 = LED_OFF;
+      RED_LED = LED_OFF;
    }
    else
    {
@@ -47,7 +47,6 @@ static void Soft_I2C_Start()
       Delay_5_us();
    }
 }
-
 static void Soft_I2C_Write(char d)
 {
    char i;
@@ -55,7 +54,7 @@ static void Soft_I2C_Write(char d)
    {
       for (i = 0; i <= 7; i++)
       {
-         if ((d & 0x01) == 0)
+         if ((d & 0x80) == 0)
             Soft_I2C_Sda_Direction = 0;
          else
             Soft_I2C_Sda_Direction = 1;
@@ -88,6 +87,7 @@ static void Soft_I2C_Stop()
       Delay_5_us();
    }
 }
+
 /********************************************************/
 /*   private LED variables  */
 
@@ -467,7 +467,7 @@ void dysp_off()
 
 void led_wr_str(char col, char pos, char str[], char leng)
 { //
-#ifdef __DEBUG    
+#ifdef SIMULATOR    
     /*  print in debug mode */ 
     char mycolumn[] = "; col=";
     char mylength[] = "; len=";
