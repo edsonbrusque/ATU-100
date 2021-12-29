@@ -193,7 +193,8 @@ void debugprint(void);
 //  Since B1 and B2 are defined as inputs, writing to them does nothing,
 //  so we will put n_Tx and p_Tx there, and the LED's also
 
-#define WA1RCT
+//  uncomment out the next line to move the LED I2C to A6 and A7
+//  #define WA1RCT
     
 #ifdef WA1RCT
 #define n_Tx LATBbits.LATB1
