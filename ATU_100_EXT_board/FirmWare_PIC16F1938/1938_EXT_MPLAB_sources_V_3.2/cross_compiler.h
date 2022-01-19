@@ -163,6 +163,9 @@ void debugprint(void);
 
 #define Delay_5_us() _delay((unsigned long)(DELAY_5_US_CLOCK));
 
+#define DELAY_100_US_CLOCK 400
+
+#define Delay_100_us() _delay((unsigned long)(DELAY_100_US_CLOCK));
     void Delay_ms(const unsigned int time_in_ms);
 
     unsigned int ADC_Get_Sample(char channel);
@@ -197,11 +200,22 @@ void debugprint(void);
 //  #define WA1RCT
     
 #ifdef WA1RCT
+    
+    //  uncomment out the next line if you want to have a uart output the
+    //  displayed strings
+//  #define UART
+
+//  the posstr is the position.  
+//   the thousands digit is the row, the 3 ls digits is the column
+void uart_wr_str(char posstr[],char str[], char leng);
+
+//  this effectively disables n_Tx, p_Tx, Green_led and Red_led
+//  since these pins are defined as INPUTS
 #define n_Tx LATBbits.LATB1
-#define p_Tx LATBbits.LATB2
+#define p_Tx LATBbits.LATB0
     
 #define GREEN_LED LATBbits.LATB1
-#define RED_LED LATBbits.LATB2 
+#define RED_LED LATBbits.LATB0 
 
 #define Soft_I2C_Scl LATAbits.LATA6
 #define Soft_I2C_Sda LATAbits.LATA7    

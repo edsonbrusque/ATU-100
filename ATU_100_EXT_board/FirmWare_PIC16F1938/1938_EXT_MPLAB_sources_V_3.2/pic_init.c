@@ -34,7 +34,13 @@ void pic_init(void)
   LATB = 0;
   LATC = 0;
   TRISA = 0b00000011;
-  TRISB = 0b00000111;
+  //  If we are using the bypass button for an output for uart
+  //  set B2 (bypass) to an output
+#ifdef UART
+  TRISB = 0b00000011;  
+#else
+  TRISB = 0b00000111;  
+#endif
   TRISC = 0b00000000; //
   //
   ADC_Init();

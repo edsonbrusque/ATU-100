@@ -499,7 +499,12 @@ void led_wr_str(char col, char pos, char str[], char leng)
     PRINTTEXTLEN(str,leng)
     PRINTLINE(myquote)  
 #endif
-            
+#ifdef UART
+   char g_work_str_u[7];
+   int position = col * 1000 + pos;
+   IntToStr(position,g_work_str_u);
+   uart_wr_str(g_work_str_u,str,leng);
+#endif            
    char i;
    if (e_c_led_type == 4 | e_c_led_type == 5)
       oled_wr_str(pos, col, str, leng); // 128*64  OLED display
