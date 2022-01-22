@@ -665,6 +665,10 @@ void lcd_prep()
    { // 128*64 OLED
       if (g_b_lcd_prep_short == 0)
       {
+//  it appears the uart needs some chars to get synced up
+#ifdef UART
+         led_wr_str(0, 22, "       ", 7);
+#endif
          led_wr_str(0, 22, "ATU-100", 7);
          led_wr_str(2, 6, "EXT board", 9);
          led_wr_str(4, 16, "by N7DDC", 8);
@@ -729,7 +733,7 @@ void lcd_swr(int swr)
    if (swr != g_i_SWR_old)
    {
       g_i_SWR_old = swr;
-      if (g_i_SWR == 0)
+      if (swr == 0)
       { // Low power
          if (e_c_ledtype == 4 | e_c_ledtype == 5)
             led_wr_str(2, 16 + 4 * 12, "0.00", 4); // 128*64 OLED

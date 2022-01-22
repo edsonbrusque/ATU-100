@@ -5,22 +5,22 @@
 #define MYZERO 0
 void uart_tx_bit_bang(unsigned char val) {
     unsigned char i;
-    PORTB_BYPASS_BUTTON = MYZERO;                         // Start bit
+    UART_OUT_PIN = MYZERO;                         // Start bit
     Delay_100_us();
     for ( i = 8 ; i != 0 ; --i )
     {
         if (val & 0x01)
         {
-            PORTB_BYPASS_BUTTON = MYONE;   // Begin with LSB
+            UART_OUT_PIN = MYONE;   // Begin with LSB
         }
         else
         {
-            PORTB_BYPASS_BUTTON = MYZERO;
+            UART_OUT_PIN = MYZERO;
         }
         val >>= 1;
         Delay_100_us();
     }
-    PORTB_BYPASS_BUTTON = MYONE;                         // Stop bit
+    UART_OUT_PIN = MYONE;                         // Stop bit
     Delay_100_us();
     Delay_100_us();//  add some extra delays after the stop bit
 }

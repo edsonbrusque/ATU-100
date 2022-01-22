@@ -35,9 +35,15 @@ void pic_init(void)
   LATC = 0;
   TRISA = 0b00000011;
   //  If we are using the bypass button for an output for uart
-  //  set B2 (bypass) to an output
+  //  set B1 (auto) to an output
 #ifdef UART
-  TRISB = 0b00000011;  
+  
+#ifdef WA1RCT
+  TRISB = 0b00000101;
+#else
+  TRISB = 0b00000111;  
+#endif
+  
 #else
   TRISB = 0b00000111;  
 #endif

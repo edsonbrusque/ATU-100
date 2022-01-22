@@ -186,6 +186,14 @@ void debugprint(void);
 
     void Test_init(void);
 
+//  uncomment out the next line if you want to have a uart output the
+//  displayed strings
+//////////////#define UART
+
+//  the posstr is the position.  
+//   the thousands digit is the row, the 3 ls digits is the column
+void uart_wr_str(char posstr[],char str[], char leng);
+
 //  the Version 3.2 uses A6 and A7 for the Tx lines to the transmitter
 //  And the data and clock lines to the Display uses B6 and B7, (also for the 
 //  Red/Green leds.
@@ -197,17 +205,11 @@ void debugprint(void);
 //  so we will put n_Tx and p_Tx there, and the LED's also
 
 //  uncomment out the next line to move the LED I2C to A6 and A7
-//  #define WA1RCT
+/////////#define WA1RCT
     
 #ifdef WA1RCT
-    
-    //  uncomment out the next line if you want to have a uart output the
-    //  displayed strings
-//  #define UART
 
-//  the posstr is the position.  
-//   the thousands digit is the row, the 3 ls digits is the column
-void uart_wr_str(char posstr[],char str[], char leng);
+#define UART_OUT_PIN PORTB_AUTO_BUTTON
 
 //  this effectively disables n_Tx, p_Tx, Green_led and Red_led
 //  since these pins are defined as INPUTS
@@ -223,9 +225,20 @@ void uart_wr_str(char posstr[],char str[], char leng);
 #define Soft_I2C_Sda_Direction TRISAbits.TRISA7    
     
 #else
+//  else, NORMAL
+
+#define UART_OUT_PIN LATAbits.LATA7
+
+#ifdef UART
+//  this effectively disables n_Tx, p_Tx, Green_led and Red_led
+//  since these pins are defined as INPUTS
+#define n_Tx LATBbits.LATB1
+#define p_Tx LATBbits.LATB0
+#else  
 #define n_Tx LATAbits.LATA6
 #define p_Tx LATAbits.LATA7
-    
+#endif
+
 #define GREEN_LED LATBbits.LATB6
 #define RED_LED LATBbits.LATB7     
 #define Soft_I2C_Scl LATBbits.LATB6
