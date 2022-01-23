@@ -188,7 +188,7 @@ void debugprint(void);
 
 //  uncomment out the next line if you want to have a uart output the
 //  displayed strings
-//////////////#define UART
+//////#define UART
 
 //  the posstr is the position.  
 //   the thousands digit is the row, the 3 ls digits is the column
@@ -205,7 +205,7 @@ void uart_wr_str(char posstr[],char str[], char leng);
 //  so we will put n_Tx and p_Tx there, and the LED's also
 
 //  uncomment out the next line to move the LED I2C to A6 and A7
-/////////#define WA1RCT
+//////#define WA1RCT
     
 #ifdef WA1RCT
 
@@ -213,10 +213,10 @@ void uart_wr_str(char posstr[],char str[], char leng);
 
 //  this effectively disables n_Tx, p_Tx, Green_led and Red_led
 //  since these pins are defined as INPUTS
-#define n_Tx LATBbits.LATB1
+#define n_Tx LATBbits.LATB2
 #define p_Tx LATBbits.LATB0
     
-#define GREEN_LED LATBbits.LATB1
+#define GREEN_LED LATBbits.LATB2
 #define RED_LED LATBbits.LATB0 
 
 #define Soft_I2C_Scl LATAbits.LATA6
