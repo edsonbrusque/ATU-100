@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/default/production\1938_EXT_MPLAB_sources_V_3.2.production.hex">
+    <memory name="program">
+      <units>words</units>
+      <length>16384</length>
+      <used>11340</used>
+      <free>5044</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>1024</length>
+      <used>351</used>
+      <free>673</free>
+    </memory>
+  </executable>
+</project>

@@ -4,8 +4,7 @@
 #define CROSS_COMPILER_H_INCLUDED
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
     /*  note datasizes for MikroC are:
@@ -13,7 +12,7 @@ extern "C"
      int is 16 bits
      long is 32 bits
      float and double are 32 bits
- */
+     */
     /*  mplab xc8 compiler sizes are
      char is 8 bits
      short is 16 bits
@@ -23,7 +22,7 @@ extern "C"
      to be standard we use 32 bits
  
  so we need to replace short with char throughout
- */
+     */
 
     /*  variable naming convention:  
      g_  global
@@ -36,11 +35,11 @@ extern "C"
      */
     /*  add a new structure for the ALL compilers */
     //  bitfield character
-    typedef union
-    {
+
+    typedef union {
         unsigned char bytes;
-        struct
-        {
+
+        struct {
             unsigned B0 : 1;
             unsigned B1 : 1;
             unsigned B2 : 1;
@@ -52,7 +51,7 @@ extern "C"
         } bits;
     } charbits;
 
-/* eeprom cells */
+    /* eeprom cells */
 #define EEPROM_LAST_CAP 255
 #define EEPROM_LAST_IND 254
 #define EEPROM_LAST_SW 253
@@ -82,42 +81,34 @@ extern "C"
 #define EEPROM_AUTOMATIC_MODE 2
 #define EEPROM_DISPLAY_TYPE 1
 #define EEPROM_DISPLAY_I2C_ADDR 0
-    
-/*  define the port B button bits */
-//
-//#define Button  RB0;
-//#define BYP_button  RB2;
-//#define Auto_button  RB1;
-    
+
+    /*  define the port B button bits */
+
 #define TUNE_BUTTON 0
 #define AUTO_BUTTON 1
 #define BYPASS_BUTTON 2
-    
-#define PORTB_TUNE_BUTTON PORTBbits.RB0
-#define PORTB_AUTO_BUTTON PORTBbits.RB1
-#define PORTB_BYPASS_BUTTON PORTBbits.RB2
 
-/*  define the button states */
+    /*  define the button states */
 #define BUTTON_PRESSED 0
 #define BUTTON_RELEASED 1
 
-/*  define the LED states */
+    /*  define the LED states */
 #define LED_ON 0
 #define LED_OFF 1
-    
+
 #ifdef SIMULATOR
 #define __DEBUG
 #endif
-    
+
 #ifdef SIMULATOR
 #include <string.h>
-    
-extern char tempstring[100];
-extern char terminator;
-extern char stringlength;
-extern char* stringptr;
 
-void debugprint(void);
+    extern char tempstring[100];
+    extern char terminator;
+    extern char stringlength;
+    extern char* stringptr;
+
+    void debugprint(void);
 
 #define PRINTLINELEN(lineptr,length) terminator=1; stringlength=length; stringptr = &lineptr[0]; debugprint();
 #define PRINTTEXTLEN(textptr,length) terminator=0; stringlength=length; stringptr = &textptr[0]; debugprint();
@@ -142,22 +133,17 @@ void debugprint(void);
 
 #define PRINTDEBUG() 
 #endif
-    
-
-/*  comment the following line out if you are using MikroC compiler */
-#define MPLAB_COMPILER
-/********************************************************************************/
-#ifdef MPLAB_COMPILER
 
 #include "xc.h"
+#include <stdbool.h>
 
-//  the internal oscillator is 16 Mhz
-//  the xc8 compiler needs the crystal freq defined here
+    //  the internal oscillator is 16 Mhz
+    //  the xc8 compiler needs the crystal freq defined here
 
 #define _XTAL_FREQ 16000000
 
-//  the CPU clock is 4 Mhz, so to convert to microseconds, there are
-//  4 clocks per usec
+    //  the CPU clock is 4 Mhz, so to convert to microseconds, there are
+    //  4 clocks per usec
 
 #define DELAY_5_US_CLOCK 20
 
@@ -166,6 +152,7 @@ void debugprint(void);
 #define DELAY_100_US_CLOCK 400
 
 #define Delay_100_us() _delay((unsigned long)(DELAY_100_US_CLOCK));
+
     void Delay_ms(const unsigned int time_in_ms);
 
     unsigned int ADC_Get_Sample(char channel);
@@ -186,67 +173,39 @@ void debugprint(void);
 
     void Test_init(void);
 
-//  uncomment out the next line if you want to have a uart output the
-//  displayed strings
-//////#define UART
+    bool out_dummy; //PP5OO
+    bool in_dummy = true; //PP5OO
 
-//  the posstr is the position.  
-//   the thousands digit is the row, the 3 ls digits is the column
-void uart_wr_str(char posstr[],char str[], char leng);
+#define UART_IN_PIN  PORTBbits.RB2 //PP5OO
+#define UART_IN_TRIS TRISBbits.TRISB2 //PP5OO
 
-//  the Version 3.2 uses A6 and A7 for the Tx lines to the transmitter
-//  And the data and clock lines to the Display uses B6 and B7, (also for the 
-//  Red/Green leds.
+#define UART_OUT_PIN  LATBbits.LATB1 //PP5OO
+#define UART_OUT_TRIS TRISBbits.TRISB1 //PP5OO
 
-//  WA1RCT defines things slightly differently.  The debugger uses B6 and B7
-//  and does not need the Tx lines to the transmitter.  So I defined the LED
-//  data and clock lines as A6 and A7, leaving B6 and B7 for the debugger.
-//  Since B1 and B2 are defined as inputs, writing to them does nothing,
-//  so we will put n_Tx and p_Tx there, and the LED's also
+#define TUNE_BUTTON_PIN  in_dummy //PP5OO
+#define TUNE_BUTTON_TRIS out_dummy //PP5OO
 
-//  uncomment out the next line to move the LED I2C to A6 and A7
-//////#define WA1RCT
-    
-#ifdef WA1RCT
+#define AUTO_BUTTON_PIN  in_dummy //PP5OO
+#define AUTO_BUTTON_TRIS out_dummy //PP5OO
 
-#define UART_OUT_PIN PORTB_AUTO_BUTTON
+#define BYPASS_BUTTON_PIN  in_dummy //PP5OO
+#define BYPASS_BUTTON_TRIS out_dummy //PP5OO
 
-//  this effectively disables n_Tx, p_Tx, Green_led and Red_led
-//  since these pins are defined as INPUTS
-#define n_Tx LATBbits.LATB2
-#define p_Tx LATBbits.LATB0
-    
-#define GREEN_LED LATBbits.LATB2
-#define RED_LED LATBbits.LATB0 
+#define PORTB_TUNE_BUTTON in_dummy
+#define PORTB_AUTO_BUTTON in_dummy
+#define PORTB_BYPASS_BUTTON in_dummy
 
-#define Soft_I2C_Scl LATAbits.LATA6
-#define Soft_I2C_Sda LATAbits.LATA7    
-#define Soft_I2C_Scl_Direction TRISAbits.TRISA6
-#define Soft_I2C_Sda_Direction TRISAbits.TRISA7    
-    
-#else
-//  else, NORMAL
-
-#define UART_OUT_PIN LATAbits.LATA7
-
-#ifdef UART
-//  this effectively disables n_Tx, p_Tx, Green_led and Red_led
-//  since these pins are defined as INPUTS
-#define n_Tx LATBbits.LATB1
-#define p_Tx LATBbits.LATB0
-#else  
-#define n_Tx LATAbits.LATA6
-#define p_Tx LATAbits.LATA7
-#endif
+#define n_Tx out_dummy //PP5OO
+#define p_Tx out_dummy //PP5OO
 
 #define GREEN_LED LATBbits.LATB6
-#define RED_LED LATBbits.LATB7     
+#define RED_LED LATBbits.LATB7
+
 #define Soft_I2C_Scl LATBbits.LATB6
 #define Soft_I2C_Sda LATBbits.LATB7 
 #define Soft_I2C_Scl_Direction TRISBbits.TRISB6
 #define Soft_I2C_Sda_Direction TRISBbits.TRISB7 
-#endif
-    
+
 #define Cap_10 LATCbits.LATC7
 #define Cap_22 LATCbits.LATC3
 #define Cap_47 LATCbits.LATC6
@@ -255,7 +214,7 @@ void uart_wr_str(char posstr[],char str[], char leng);
 #define Cap_470 LATCbits.LATC1
 #define Cap_1000 LATCbits.LATC4
 #define Cap_sw LATCbits.LATC0
-//
+    //
 #define Ind_005 LATBbits.LATB3
 #define Ind_011 LATAbits.LATA2
 #define Ind_022 LATBbits.LATB4
@@ -264,56 +223,10 @@ void uart_wr_str(char posstr[],char str[], char leng);
 #define Ind_22 LATAbits.LATA5
 #define Ind_45 LATAbits.LATA4
 
-    
-/*  define how we wait for the Fixed voltage Regulator to be stable */
+
+    /*  define how we wait for the Fixed voltage Regulator to be stable */
 #define WAIT_FOR_FVR    while (FVRCONbits.FVRRDY == 0);
-    
-/********************************************************************************/
-    /* else mikroC compiler */
-#else
- 
-#define LATBbits.LAT   LATB
-#define GREEN_LED LATBbits.LATB6
-#define RED_LED LATBbits.LATB7
 
-
-sbit n_Tx at LATA6_bit;
-sbit p_Tx at LATA7_bit;
-//
-//sbit Button at RB0_bit;
-//sbit BYP_button at RB2_bit;
-//sbit Auto_button at RB1_bit;
-//
-sbit Cap_10 at LATC7_bit;
-sbit Cap_22 at LATC3_bit;
-sbit Cap_47 at LATC6_bit;
-sbit Cap_100 at LATC2_bit;
-sbit Cap_220 at LATC5_bit;
-sbit Cap_470 at LATC1_bit;
-sbit Cap_1000 at LATC4_bit;
-sbit Cap_sw at LATC0_bit;
-//
-sbit Ind_005 at LATB3_bit;
-sbit Ind_011 at LATA2_bit;
-sbit Ind_022 at LATB4_bit;
-sbit Ind_045 at LATA3_bit;
-sbit Ind_1 at LATB5_bit;
-sbit Ind_22 at LATA5_bit;
-sbit Ind_45 at LATA4_bit;
-
-void Delay_5_us();
-    
-sbit Soft_I2C_Scl at LATB6_bit;
-sbit Soft_I2C_Sda at LATB7_bit;
-sbit Soft_I2C_Scl_Direction at TRISB6_bit;
-sbit Soft_I2C_Sda_Direction at TRISB7_bit;
-
-/*  define how we wait for the Fixed voltage Regulator to be stable */
-
-#define WAIT_FOR_FVR while (FVRCON.B6 == 0);
-
-/* #endif which compiler */    
-#endif
 
 #ifdef __cplusplus
 }
