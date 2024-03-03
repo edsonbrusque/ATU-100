@@ -27,7 +27,7 @@ Just load it on PICkit or any other tool you use for writing the microcontroller
 
 This code is derived from:
 
-WA1RCT/N7DDC-ATU-100-mini-and-extended-boards
+https://github.com/WA1RCT/N7DDC-ATU-100-mini-and-extended-boards
 
 Which is derived from:
 
