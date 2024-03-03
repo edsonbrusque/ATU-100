@@ -3,12 +3,12 @@ Microchip MPLAB XC8 Compiler V2.36
 Linker command line:
 
 -W-9 --edf=C:\Program Files\Microchip\xc8\v2.36\pic\dat\en_msgs.txt -cn \
-  -h+dist/default/production\1938_EXT_MPLAB_sources_V_3.2.production.sym \
-  --cmf=dist/default/production\1938_EXT_MPLAB_sources_V_3.2.production.cmf \
-  -z -Q16F1938 -oC:\Users\Brusque\AppData\Local\Temp\xcAs1io.4 \
+  -h+dist/default/production\FirmWare_PIC16F1938.production.sym \
+  --cmf=dist/default/production\FirmWare_PIC16F1938.production.cmf -z \
+  -Q16F1938 -oC:\Users\Brusque\AppData\Local\Temp\xcAsphc.4 \
   --defsym=__MPLAB_BUILD=1 \
-  -Mdist/default/production/1938_EXT_MPLAB_sources_V_3.2.production.map \
-  --md=C:\Users\Brusque\AppData\Local\Temp\xcAs1io.dat -E1 \
+  -Mdist/default/production/FirmWare_PIC16F1938.production.map \
+  --md=C:\Users\Brusque\AppData\Local\Temp\xcAsphc.dat -E1 \
   -ver=XC8 Compiler --acfsm=1493 -ACODE=00h-07FFhx8 -ASTRCODE=00h-03FFFh \
   -ASTRING=00h-0FFhx64 -ACONST=00h-0FFhx64 -AENTRY=00h-0FFhx64 \
   -ACOMMON=070h-07Fh -ABANK0=020h-06Fh -ABANK1=0A0h-0EFh \
@@ -33,8 +33,8 @@ Linker command line:
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
   -DENTRY=2 -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE \
   -pcinit=CODE -pfunctab=ENTRY -k \
-  C:\Users\Brusque\AppData\Local\Temp\xcAs1io.o \
-  dist/default/production\1938_EXT_MPLAB_sources_V_3.2.production.o 
+  C:\Users\Brusque\AppData\Local\Temp\xcAsphc.o \
+  dist/default/production\FirmWare_PIC16F1938.production.o 
 
 Object code version is 3.11
 
@@ -43,12 +43,12 @@ Machine type is 16F1938
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\Brusque\AppData\Local\Temp\xcAs1io.o
+C:\Users\Brusque\AppData\Local\Temp\xcAsphc.o
                 end_init                             14       14        2        8       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        2        0       4
                 idloc                              8000     8000        4        0       5
-dist/default/production\1938_EXT_MPLAB_sources_V_3.2.production.o
+dist/default/production\FirmWare_PIC16F1938.production.o
                 cinit                                16       16       3A        8       0
                 intentry                              4        4       10        8       0
                 config                             8007     8007        2        0       4
@@ -1190,14 +1190,14 @@ _cells_init                            text4        00CF1
 _coarse_cap                            text16       023E4
 _coarse_tune                           text15       025D1
 _correction                            text27       01C28
-_e_c_K_Mult                            dataBANK3    001D9
+_e_c_K_Mult                            dataBANK3    001D8
 _e_c_b_C_linear                        bssBANK2     00134
 _e_c_b_D_correction                    dataBANK2    0016B
 _e_c_b_L_invert                        bssBANK2     00133
 _e_c_b_L_linear                        bssBANK2     00135
 _e_c_b_Loss_ind                        bssBANK2     00130
 _e_c_b_P_High                          bssBANK2     00131
-_e_c_b_Relay_off                       bssBANK3     001D3
+_e_c_b_Relay_off                       bssBANK3     001D2
 _e_c_ledtype                           bssBANK2     0012F
 _e_c_num_C_q                           dataBANK2    0016C
 _e_c_num_L_q                           dataBANK2    0016D
@@ -1268,7 +1268,7 @@ _lcd_pwr                               text19       00A46
 _lcd_pwr$643                           cstackBANK1  000E6
 _lcd_swr                               text22       019B9
 _main                                  maintext     01A85
-_out_dummy                             bssBANK3     001D2
+_out_dummy                             bssBANK3     001D3
 _pic_init                              text1        02DB9
 _refresh                               bssBANK3     001CA
 _set_cap                               text50       02E36
@@ -1277,10 +1277,10 @@ _set_sw                                text40       02CAE
 _sharp_cap                             text14       0273B
 _sharp_ind                             text13       0182C
 _show_pwr                              text20       00050
-_show_pwr$1913                         cstackBANK1  000C5
-_show_pwr$1914                         cstackBANK1  000CD
-_show_pwr$1915                         cstackBANK1  000C9
-_show_pwr$1916                         cstackBANK1  000D1
+_show_pwr$1921                         cstackBANK1  000C5
+_show_pwr$1922                         cstackBANK1  000CD
+_show_pwr$1923                         cstackBANK1  000C9
+_show_pwr$1924                         cstackBANK1  000D1
 _show_reset                            text18       02484
 _sub_tune                              text12       0103E
 _tune                                  text11       01B56

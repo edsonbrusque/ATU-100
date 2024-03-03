@@ -23,8 +23,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _PORTBbits `VS37 ~T0 @X0 0 e@13 ]
 "95 uart.c
 [; ;uart.c: 95:                 state = DATA_BIT;
-[c E2770 0 1 2 .. ]
-[n E2770 state_e START_BIT DATA_BIT STOP_BIT  ]
+[c E2772 0 1 2 .. ]
+[n E2772 state_e START_BIT DATA_BIT STOP_BIT  ]
 "55 C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic16f1938.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic16f1938.h: 55: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -520,6 +520,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "7122
 [; ;C:/Program Files/Microchip/MPLABX/v6.00/packs/Microchip/PIC12-16F1xxx_DFP/1.3.90/xc8\pic\include\proc\pic16f1938.h: 7122: __asm("TOSH equ 0FEFh");
 [; <" TOSH equ 0FEFh ;# ">
+"176 ./cross_compiler.h
+[; ;./cross_compiler.h: 176:     _Bool out_dummy;
+[v _out_dummy `a ~T0 @X0 1 e ]
+"177
+[; ;./cross_compiler.h: 177:     _Bool in_dummy = 1;
+[v _in_dummy `a ~T0 @X0 1 e ]
+[i _in_dummy
+-> -> 1 `i `a
+]
 "13 uart.c
 [; ;uart.c: 13: static char buffer[(32+5)] = {
 [v _buffer `uc ~T0 @X0 -> 37 `i s ]
@@ -578,25 +587,25 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "23
 [; ;uart.c: 23:     static uint8_t strPosition = 0;
-[v F2759 `uc ~T0 @X0 1 s strPosition ]
-[i F2759
+[v F2761 `uc ~T0 @X0 1 s strPosition ]
+[i F2761
 -> -> 0 `i `uc
 ]
 "24
 [; ;uart.c: 24:     static uint8_t chrPosition = 0;
-[v F2760 `uc ~T0 @X0 1 s chrPosition ]
-[i F2760
+[v F2762 `uc ~T0 @X0 1 s chrPosition ]
+[i F2762
 -> -> 0 `i `uc
 ]
 "26
 [; ;uart.c: 26:     static uint8_t buf = 0x00;
-[v F2761 `uc ~T0 @X0 1 s buf ]
-[i F2761
+[v F2763 `uc ~T0 @X0 1 s buf ]
+[i F2763
 -> -> 0 `i `uc
 ]
 "28
 [; ;uart.c: 28:     if (chrPosition == 0) {
-[e $ ! == -> F2760 `i -> 0 `i 359  ]
+[e $ ! == -> F2762 `i -> 0 `i 359  ]
 {
 "29
 [; ;uart.c: 29:         if (refresh) {
@@ -604,14 +613,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "30
 [; ;uart.c: 30:             if (strPosition < (32+5)) {
-[e $ ! < -> F2759 `i + -> 32 `i -> 5 `i 361  ]
+[e $ ! < -> F2761 `i + -> 32 `i -> 5 `i 361  ]
 {
 "31
 [; ;uart.c: 31:                 LATBbits.LATB1 = 0;
 [e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
 "32
 [; ;uart.c: 32:                 buf = buffer[strPosition];
-[e = F2761 -> *U + &U _buffer * -> F2759 `ux -> -> # *U &U _buffer `ui `ux `uc ]
+[e = F2763 -> *U + &U _buffer * -> F2761 `ux -> -> # *U &U _buffer `ui `ux `uc ]
 "33
 [; ;uart.c: 33:             } else {
 }
@@ -620,14 +629,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "34
 [; ;uart.c: 34:                 buf = 0xFF;
-[e = F2761 -> -> 255 `i `uc ]
+[e = F2763 -> -> 255 `i `uc ]
 "35
 [; ;uart.c: 35:             }
 }
 [e :U 362 ]
 "36
 [; ;uart.c: 36:             chrPosition++;
-[e ++ F2760 -> -> 1 `i `uc ]
+[e ++ F2762 -> -> 1 `i `uc ]
 "37
 [; ;uart.c: 37:         }
 }
@@ -637,11 +646,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 363  ]
 [e :U 359 ]
-[e $ ! <= -> F2760 `i -> 8 `i 364  ]
+[e $ ! <= -> F2762 `i -> 8 `i 364  ]
 {
 "39
 [; ;uart.c: 39:         if (buf & 0x01) {
-[e $ ! != & -> F2761 `i -> 1 `i -> 0 `i 365  ]
+[e $ ! != & -> F2763 `i -> 1 `i -> 0 `i 365  ]
 {
 "40
 [; ;uart.c: 40:             LATBbits.LATB1 = 1;
@@ -661,23 +670,23 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 366 ]
 "44
 [; ;uart.c: 44:         buf >>= 1;
-[e =>> F2761 -> -> 1 `i `uc ]
+[e =>> F2763 -> -> 1 `i `uc ]
 "45
 [; ;uart.c: 45:         chrPosition++;
-[e ++ F2760 -> -> 1 `i `uc ]
+[e ++ F2762 -> -> 1 `i `uc ]
 "46
 [; ;uart.c: 46:     } else if (chrPosition <= 10) {
 }
 [e $U 367  ]
 [e :U 364 ]
-[e $ ! <= -> F2760 `i -> 10 `i 368  ]
+[e $ ! <= -> F2762 `i -> 10 `i 368  ]
 {
 "47
 [; ;uart.c: 47:         LATBbits.LATB1 = 1;
 [e = . . _LATBbits 0 1 -> -> 1 `i `uc ]
 "48
 [; ;uart.c: 48:         chrPosition++;
-[e ++ F2760 -> -> 1 `i `uc ]
+[e ++ F2762 -> -> 1 `i `uc ]
 "49
 [; ;uart.c: 49:     } else {
 }
@@ -686,13 +695,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "50
 [; ;uart.c: 50:         chrPosition = 0;
-[e = F2760 -> -> 0 `i `uc ]
+[e = F2762 -> -> 0 `i `uc ]
 "51
 [; ;uart.c: 51:         strPosition++;
-[e ++ F2759 -> -> 1 `i `uc ]
+[e ++ F2761 -> -> 1 `i `uc ]
 "52
 [; ;uart.c: 52:         if (strPosition == (32+5)) {
-[e $ ! == -> F2759 `i + -> 32 `i -> 5 `i 370  ]
+[e $ ! == -> F2761 `i + -> 32 `i -> 5 `i 370  ]
 {
 "53
 [; ;uart.c: 53:             refresh = 0;
@@ -702,11 +711,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 371  ]
 [e :U 370 ]
-[e $ ! > -> F2759 `i -> 137 `i 372  ]
+[e $ ! > -> F2761 `i -> 137 `i 372  ]
 {
 "55
 [; ;uart.c: 55:             strPosition = 0;
-[e = F2759 -> -> 0 `i `uc ]
+[e = F2761 -> -> 0 `i `uc ]
 "56
 [; ;uart.c: 56:         }
 }
@@ -792,14 +801,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "85
 [; ;uart.c: 85:     static uint8_t state;
-[v F2775 `uc ~T0 @X0 1 s state ]
+[v F2777 `uc ~T0 @X0 1 s state ]
 "86
 [; ;uart.c: 86:     static uint8_t buf;
-[v F2776 `uc ~T0 @X0 1 s buf ]
+[v F2778 `uc ~T0 @X0 1 s buf ]
 "87
 [; ;uart.c: 87:     static uint8_t bitCounter = 0;
-[v F2777 `uc ~T0 @X0 1 s bitCounter ]
-[i F2777
+[v F2779 `uc ~T0 @X0 1 s bitCounter ]
+[i F2779
 -> -> 0 `i `uc
 ]
 "89
@@ -819,10 +828,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "94
 [; ;uart.c: 94:                 bitCounter = 0;
-[e = F2777 -> -> 0 `i `uc ]
+[e = F2779 -> -> 0 `i `uc ]
 "95
 [; ;uart.c: 95:                 state = DATA_BIT;
-[e = F2775 -> . `E2770 1 `uc ]
+[e = F2777 -> . `E2772 1 `uc ]
 "96
 [; ;uart.c: 96:             }
 }
@@ -835,17 +844,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 385 ]
 "99
 [; ;uart.c: 99:             buf >>= 1;
-[e =>> F2776 -> -> 1 `i `uc ]
+[e =>> F2778 -> -> 1 `i `uc ]
 "100
 [; ;uart.c: 100:             buf |= inbit << 7;
-[e =| F2776 -> << -> _inbit `i -> 7 `i `uc ]
+[e =| F2778 -> << -> _inbit `i -> 7 `i `uc ]
 "102
 [; ;uart.c: 102:             if (++bitCounter == 8) {
-[e $ ! == -> =+ F2777 -> -> 1 `i `uc `i -> 8 `i 386  ]
+[e $ ! == -> =+ F2779 -> -> 1 `i `uc `i -> 8 `i 386  ]
 {
 "103
 [; ;uart.c: 103:                 state = STOP_BIT;
-[e = F2775 -> . `E2770 2 `uc ]
+[e = F2777 -> . `E2772 2 `uc ]
 "104
 [; ;uart.c: 104:             }
 }
@@ -862,10 +871,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "108
 [; ;uart.c: 108:                 inbuf = buf;
-[e = _inbuf -> F2776 `uc ]
+[e = _inbuf -> F2778 `uc ]
 "109
 [; ;uart.c: 109:                 buffer[(32+5) - 3] = buf;
-[e = *U + &U _buffer * -> -> - + -> 32 `i -> 5 `i -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> F2776 `uc ]
+[e = *U + &U _buffer * -> -> - + -> 32 `i -> 5 `i -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux -> F2778 `uc ]
 "110
 [; ;uart.c: 110:                 refresh = 1;
 [e = _refresh -> -> 1 `i `a ]
@@ -875,7 +884,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 388 ]
 "112
 [; ;uart.c: 112:             state = START_BIT;
-[e = F2775 -> . `E2770 0 `uc ]
+[e = F2777 -> . `E2772 0 `uc ]
 "113
 [; ;uart.c: 113:             break;
 [e $U 381  ]
@@ -884,9 +893,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 381  ]
 [e :U 382 ]
-[e [\ -> F2775 `i , $ . `E2770 0 383
- , $ . `E2770 1 385
- , $ . `E2770 2 387
+[e [\ -> F2777 `i , $ . `E2772 0 383
+ , $ . `E2772 1 385
+ , $ . `E2772 2 387
  381 ]
 [e :U 381 ]
 "115

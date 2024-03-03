@@ -1,2 +1,0 @@
-Started with 1938_EXT_board_sources_V_3.2 which compiles only under MikroC and ported them to MPLAB.
-this should still compile successfully under MikroC also

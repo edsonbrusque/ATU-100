@@ -4961,6 +4961,9 @@ extern __bank0 __bit __timeout;
 
 
     void Test_init(void);
+
+    _Bool out_dummy;
+    _Bool in_dummy = 1;
 # 5 "main.c" 2
 
 # 1 "./uart.h" 1
@@ -5584,11 +5587,7 @@ void tune() {
     return;
 }
 # 7 "main.c" 2
-
-
-_Bool out_dummy;
-_Bool in_dummy = 1;
-# 19 "main.c"
+# 16 "main.c"
 int g_i_SWR_fixed_old = 0;
 char g_work_str[7], g_work_str_2[7];
 int g_i_Power = 0, g_i_Power_old = 10000;
@@ -5719,7 +5718,7 @@ void main() {
             button_proc();
         else
             button_proc_test();
-# 160 "main.c"
+# 157 "main.c"
     }
 }
 

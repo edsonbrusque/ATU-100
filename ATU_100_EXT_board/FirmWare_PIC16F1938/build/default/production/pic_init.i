@@ -4961,6 +4961,9 @@ extern __bank0 __bit __timeout;
 
 
     void Test_init(void);
+
+    _Bool out_dummy;
+    _Bool in_dummy = 1;
 # 5 "pic_init.c" 2
 
 
@@ -4994,7 +4997,7 @@ void pic_init(void) {
     TRISB = 0b00000111;
     TRISC = 0b00000000;
 
-    TRISBbits.TRISB1 = 1;
+    TRISBbits.TRISB2 = 1;
     TRISBbits.TRISB1 = 0;
 
     ADC_Init();

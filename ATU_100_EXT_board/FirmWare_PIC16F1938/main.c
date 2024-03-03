@@ -6,9 +6,6 @@
 #include "uart.h"
 #include "main.h"
 
-bool out_dummy; //PP5OO
-bool in_dummy = true; //PP5OO
-
 /*  a few constants */
 
 #define DEFAULT_INITIAL_OLD_VALUE  10000

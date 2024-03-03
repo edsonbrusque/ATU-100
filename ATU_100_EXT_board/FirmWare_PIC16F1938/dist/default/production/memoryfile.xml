@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\1938_EXT_MPLAB_sources_V_3.2.production.hex">
+  <executable name="dist/default/production\FirmWare_PIC16F1938.production.hex">
     <memory name="program">
       <units>words</units>
       <length>16384</length>

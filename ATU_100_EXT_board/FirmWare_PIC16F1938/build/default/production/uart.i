@@ -4959,6 +4959,9 @@ extern __bank0 __bit __timeout;
 
 
     void Test_init(void);
+
+    _Bool out_dummy;
+    _Bool in_dummy = 1;
 # 1 "./uart.h" 2
 
 
