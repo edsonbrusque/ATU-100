@@ -23,6 +23,23 @@ The compiled hex file is on dist\default\production folder.
 Just load it on PICkit or any other tool you use for writing the microcontroller.
 
 
+## How to interface
+
+The serial routine runs at a baudrate of 9600 bps.
+
+To control the tuner you just need to send a character as if you were pressing a button on the original firmware. The firmware is case insensitive and the commands are:
+
+**A** - toggles auto (automatic tunning)
+
+**B** - toggles bypass
+
+**R** - resets the tuner (makes C = 0 and L=0)
+
+**T** - forces tunning
+
+The tuner sends almost the same text that is send to the display on the original firmware whenever there's a change in status.
+
+
 ## Acknowledgements
 
 This code is derived from:
