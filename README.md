@@ -39,10 +39,7 @@ To control the tuner you just need to send a character as if you were pressing a
 
 The tuner sends almost the same text that is send to the display on the original firmware whenever there's a change in status.
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 77f5c90f62e1233bed49024a3ad640f25f94c405
 ## Acknowledgements
 
 This code is derived from:
