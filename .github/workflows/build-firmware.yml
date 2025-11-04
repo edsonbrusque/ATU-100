@@ -20,14 +20,17 @@ jobs:
       uses: actions/cache@v4
       with:
         path: /opt/microchip/xc8
-        key: xc8-v2.50-${{ runner.os }}
+        key: xc8-v2.46-${{ runner.os }}
 
     - name: Download and Install XC8 Compiler
       if: steps.cache-xc8.outputs.cache-hit != 'true'
       run: |
-        echo "Downloading XC8 Compiler v2.50..."
-        # Download XC8 v2.50 (free version)
-        wget -q https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareLibraries/Firmware/xc8-v2.50-full-install-linux-x64-installer.run -O xc8-installer.run
+        echo "Downloading XC8 Compiler v2.46..."
+        # Download XC8 v2.46 (free version, using verified URL)
+        wget --no-verbose https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/xc8-v2.46-full-install-linux-x64-installer.run -O xc8-installer.run
+
+        echo "Verifying download..."
+        ls -lh xc8-installer.run
 
         echo "Installing XC8 in unattended mode..."
         chmod +x xc8-installer.run
@@ -40,10 +43,10 @@ jobs:
 
     - name: Verify XC8 Installation
       run: |
-        export PATH="/opt/microchip/xc8/v2.50/bin:$PATH"
+        export PATH="/opt/microchip/xc8/v2.46/bin:$PATH"
         xc8-cc --version || true
         which xc8-cc || echo "xc8-cc not found in PATH"
-        ls -la /opt/microchip/xc8/v2.50/bin/ || true
+        ls -la /opt/microchip/xc8/v2.46/bin/ || true
 
     - name: Install build dependencies
       run: |
@@ -64,7 +67,7 @@ jobs:
     - name: Build Firmware
       working-directory: ATU_100_EXT_board/FirmWare_PIC16F1938
       run: |
-        export PATH="/opt/microchip/xc8/v2.50/bin:$PATH"
+        export PATH="/opt/microchip/xc8/v2.46/bin:$PATH"
 
         echo "Starting build process..."
         make clean || true
@@ -101,5 +104,5 @@ jobs:
         ls -lh dist/default/production/*.hex 2>/dev/null || echo "No hex files found"
         echo '```' >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Compiler:** Microchip XC8 v2.50" >> $GITHUB_STEP_SUMMARY
+        echo "**Compiler:** Microchip XC8 v2.46" >> $GITHUB_STEP_SUMMARY
         echo "**Target:** PIC16F1938" >> $GITHUB_STEP_SUMMARY

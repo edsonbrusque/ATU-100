@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and install Microchip XC8 Compiler v2.50
-RUN wget -q https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareLibraries/Firmware/xc8-v2.50-full-install-linux-x64-installer.run \
+# Download and install Microchip XC8 Compiler v2.46
+RUN wget --no-verbose https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/xc8-v2.46-full-install-linux-x64-installer.run \
     -O /tmp/xc8-installer.run && \
     chmod +x /tmp/xc8-installer.run && \
     /tmp/xc8-installer.run --mode unattended --unattendedmodeui none \
@@ -24,7 +24,7 @@ RUN wget -q https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/Produ
     rm /tmp/xc8-installer.run
 
 # Add XC8 to PATH
-ENV PATH="/opt/microchip/xc8/v2.50/bin:${PATH}"
+ENV PATH="/opt/microchip/xc8/v2.46/bin:${PATH}"
 
 # Set working directory
 WORKDIR /work
