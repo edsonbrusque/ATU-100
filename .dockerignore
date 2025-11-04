@@ -1,0 +1,25 @@
+# Git files
+.git
+.gitignore
+
+# GitHub Actions
+.github
+
+# Build artifacts (will be generated)
+ATU_100_EXT_board/FirmWare_PIC16F1938/build
+ATU_100_EXT_board/FirmWare_PIC16F1938/dist
+
+# IDE files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Documentation
+*.md
+!README.md
+
+# Other
+.DS_Store
+Thumbs.db

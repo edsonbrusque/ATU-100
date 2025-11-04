@@ -1,0 +1,94 @@
+name: Build ATU-100 Firmware
+
+on:
+  push:
+    branches: [ main, master, 'claude/**' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Cache XC8 Compiler
+      id: cache-xc8
+      uses: actions/cache@v4
+      with:
+        path: /opt/microchip/xc8
+        key: xc8-v2.50-${{ runner.os }}
+
+    - name: Download and Install XC8 Compiler
+      if: steps.cache-xc8.outputs.cache-hit != 'true'
+      run: |
+        echo "Downloading XC8 Compiler v2.50..."
+        # Download XC8 v2.50 (free version)
+        wget -q https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareLibraries/Firmware/xc8-v2.50-full-install-linux-x64-installer.run -O xc8-installer.run
+
+        echo "Installing XC8 in unattended mode..."
+        chmod +x xc8-installer.run
+        sudo ./xc8-installer.run --mode unattended --unattendedmodeui none \
+          --netservername localhost --LicenseType FreeMode \
+          --prefix /opt/microchip/xc8
+
+        echo "XC8 installation complete!"
+        rm xc8-installer.run
+
+    - name: Verify XC8 Installation
+      run: |
+        export PATH="/opt/microchip/xc8/v2.50/bin:$PATH"
+        xc8-cc --version || true
+        which xc8-cc || echo "xc8-cc not found in PATH"
+        ls -la /opt/microchip/xc8/v2.50/bin/ || true
+
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make
+
+    - name: Build Firmware
+      working-directory: ATU_100_EXT_board/FirmWare_PIC16F1938
+      run: |
+        export PATH="/opt/microchip/xc8/v2.50/bin:$PATH"
+
+        echo "Starting build process..."
+        make clean || true
+        make build
+
+        echo "Build complete!"
+
+    - name: Check build artifacts
+      working-directory: ATU_100_EXT_board/FirmWare_PIC16F1938
+      run: |
+        echo "Checking for output files..."
+        ls -lh dist/default/production/ || echo "Production directory not found"
+        find . -name "*.hex" -type f
+
+    - name: Upload Firmware Hex File
+      uses: actions/upload-artifact@v4
+      with:
+        name: ATU-100-firmware-hex
+        path: |
+          ATU_100_EXT_board/FirmWare_PIC16F1938/dist/default/production/*.hex
+          ATU_100_EXT_board/FirmWare_PIC16F1938/dist/default/production/*.elf
+        retention-days: 90
+        if-no-files-found: error
+
+    - name: Upload Build Summary
+      working-directory: ATU_100_EXT_board/FirmWare_PIC16F1938
+      run: |
+        echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Build Status:** ✅ Success" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Artifacts:**" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        ls -lh dist/default/production/*.hex 2>/dev/null || echo "No hex files found"
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Compiler:** Microchip XC8 v2.50" >> $GITHUB_STEP_SUMMARY
+        echo "**Target:** PIC16F1938" >> $GITHUB_STEP_SUMMARY

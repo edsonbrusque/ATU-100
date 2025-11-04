@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: atu100-builder:latest
+    volumes:
+      - .:/work
+    working_dir: /work
+    # Override the default command if needed
+    # Example: docker-compose run builder make clean

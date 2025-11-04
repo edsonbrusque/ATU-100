@@ -7,13 +7,30 @@ This is very useful, for example, to have the tuner right at the feedpoint of th
 
 ## Build instructions
 
-To compile it, just download and install Microchip MPLAB-X IDE and XC8 compiler:
+### Online Build (No Installation Required!) ⭐
 
-https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide
+The easiest way to build this firmware is using **GitHub Actions** - no software installation needed!
 
-https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers
+Simply push your code to GitHub and the firmware will be automatically compiled in the cloud. Download the `.hex` file from the workflow artifacts.
 
-Open the project, click on the hammer icon (Build Project) and that's it. It should  compile on first try without any errors on most systems.
+See **[BUILD.md](BUILD.md)** for complete instructions on:
+- 🌐 **GitHub Actions** (recommended - zero setup)
+- 🐳 **Docker** (local build without MPLAB X)
+- 💻 **MPLAB X IDE** (traditional method)
+
+### Traditional Build with MPLAB X
+
+If you prefer to build locally with the IDE:
+
+1. Download and install Microchip MPLAB-X IDE and XC8 compiler:
+   - https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide
+   - https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers
+
+2. Open the project in MPLAB X (located in `ATU_100_EXT_board/FirmWare_PIC16F1938`)
+
+3. Click on the hammer icon (Build Project)
+
+The firmware should compile on first try without any errors on most systems.
 
 
 ## How to program
