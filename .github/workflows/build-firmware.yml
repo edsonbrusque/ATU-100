@@ -50,6 +50,17 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y make
 
+    - name: Prepare Linux build configuration
+      working-directory: ATU_100_EXT_board/FirmWare_PIC16F1938
+      run: |
+        echo "Backing up Windows Makefile configuration..."
+        cp nbproject/Makefile-local-default.mk nbproject/Makefile-local-default.mk.windows.bak
+
+        echo "Installing Linux Makefile configuration..."
+        cp nbproject/Makefile-local-default.mk.linux nbproject/Makefile-local-default.mk
+
+        echo "Linux build configuration installed!"
+
     - name: Build Firmware
       working-directory: ATU_100_EXT_board/FirmWare_PIC16F1938
       run: |

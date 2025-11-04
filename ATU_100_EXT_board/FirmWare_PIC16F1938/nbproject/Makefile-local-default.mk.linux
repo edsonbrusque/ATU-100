@@ -1,0 +1,36 @@
+#
+# Linux-specific Makefile configuration for GitHub Actions / CI builds
+#
+# This file provides Linux-compatible paths for building without MPLAB X IDE
+# It will be copied over Makefile-local-default.mk during CI builds
+#
+
+# Linux shell
+SHELL=/bin/bash
+
+# No IDE paths needed for command-line build
+PATH_TO_IDE_BIN=
+
+# Detect OS
+OS_CURRENT="$(shell uname -s)"
+
+# XC8 v2.50 compiler paths for Linux
+MP_CC="/opt/microchip/xc8/v2.50/bin/xc8-cc"
+MP_AS="/opt/microchip/xc8/v2.50/bin/xc8-cc"
+MP_LD="/opt/microchip/xc8/v2.50/bin/xc8-cc"
+MP_AR="/opt/microchip/xc8/v2.50/bin/xc8-ar"
+
+MP_CC_DIR="/opt/microchip/xc8/v2.50/bin"
+MP_AS_DIR="/opt/microchip/xc8/v2.50/bin"
+MP_LD_DIR="/opt/microchip/xc8/v2.50/bin"
+MP_AR_DIR="/opt/microchip/xc8/v2.50/bin"
+
+# Device Family Pack - bundled with XC8
+DFP_DIR="/opt/microchip/xc8/v2.50/packs/Microchip/PIC12-16F1xxx_DFP"
+
+# Use fixDeps from system
+FIXDEPS=fixDeps
+
+# Java not needed for command-line build
+MP_JAVA_PATH=
+DEP_GEN=

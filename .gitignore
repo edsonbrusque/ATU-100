@@ -1,0 +1,42 @@
+# Build artifacts
+ATU_100_EXT_board/FirmWare_PIC16F1938/build/
+ATU_100_EXT_board/FirmWare_PIC16F1938/dist/
+ATU_100_EXT_board/FirmWare_PIC16F1938/nbproject/private/
+ATU_100_EXT_board/FirmWare_PIC16F1938/nbproject/*.properties
+*.d
+*.p1
+*.pre
+*.sym
+*.obj
+*.o
+*.elf
+*.cof
+*.hxl
+*.lst
+*.map
+
+# Backup files created during CI builds
+*.windows.bak
+*.bak
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Dependency directories
+node_modules/
+
+# Log files
+*.log
+
+# Temporary files
+tmp/
+temp/

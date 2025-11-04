@@ -30,4 +30,4 @@ ENV PATH="/opt/microchip/xc8/v2.50/bin:${PATH}"
 WORKDIR /work
 
 # Default command: build the firmware
-CMD ["sh", "-c", "cd ATU_100_EXT_board/FirmWare_PIC16F1938 && make clean && make build && echo '\n=== Build Complete ===' && ls -lh dist/default/production/*.hex"]
+CMD ["sh", "-c", "cd ATU_100_EXT_board/FirmWare_PIC16F1938 && cp nbproject/Makefile-local-default.mk.linux nbproject/Makefile-local-default.mk && make clean && make build && echo '\n=== Build Complete ===' && ls -lh dist/default/production/*.hex"]
